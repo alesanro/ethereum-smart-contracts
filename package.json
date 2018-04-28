@@ -1,0 +1,32 @@
+{
+  "name": "ethereum-smart-contracts",
+  "version": "0.0.1",
+  "description": "Provides basic ERC20 tokens and abi for using with web3.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alesanro/ethereum-smart-contracts.git"
+  },
+  "keywords": [
+    "smart-contracts",
+    "ethereum",
+    "web3",
+    "erc20token"
+  ],
+  "author": "Aliaksandr Rudziak",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alesanro/ethereum-smart-contracts/issues"
+  },
+  "homepage": "https://github.com/alesanro/ethereum-smart-contracts#readme",
+  "dependencies": {
+    "web3": "1.0.0-beta.34"
+  },
+  "devDependencies": {
+    "truffle": "4.1.7",
+    "ganache-cli": "6.1.0"
+  }
+}
