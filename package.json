@@ -1,6 +1,6 @@
 {
   "name": "ethereum-smart-contracts",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Provides basic ERC20 tokens and abi for using with web3.js",
   "main": "index.js",
   "scripts": {
@@ -22,6 +22,10 @@
     "url": "https://github.com/alesanro/ethereum-smart-contracts/issues"
   },
   "homepage": "https://github.com/alesanro/ethereum-smart-contracts#readme",
+  "files": [
+    "examples",
+    "build"
+  ],
   "dependencies": {
     "web3": "1.0.0-beta.34"
   },
