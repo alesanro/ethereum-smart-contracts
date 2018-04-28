@@ -1,3 +1,6 @@
+[![npm version](https://badge.fury.io/js/ethereum-smart-contracts.svg)](https://badge.fury.io/js/ethereum-smart-contracts)
+[![dependencies Status](https://david-dm.org/alesanro/ethereum-smart-contracts.svg)](https://david-dm.org/alesanro/ethereum-smart-contracts.svg)
+[![devDependencies Status](https://david-dm.org/alesanro/ethereum-smart-contracts/dev-status.svg)](https://david-dm.org/alesanro/ethereum-smart-contracts?type=dev)
 # Common information
 
 This package provides an ability to access and use basic smart contracts without any need to compile them manually.
