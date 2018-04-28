@@ -1,0 +1,4 @@
+*.log
+*.bac
+npm-debug.log
+
