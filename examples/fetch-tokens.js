@@ -1,4 +1,4 @@
-const SmartContracts = require("../index")
+const ContractsContext = require("../index")
 
 module.exports = async function () {
 	const uri = "https://mainnet.infura.io/"
@@ -13,12 +13,11 @@ module.exports = async function () {
 		"0x6531f133e6deebe7f2dce5a0441aa7ef330b4e53", // TIME
 	]
 
-	const context = SmartContracts(uri)
-	const web3 = context.web3
+	const context = ContractsContext.withUri(uri, options)
 	
 	const tokens = []
 	for (var tokenAddress of tokenAddresses) {
-		const token = SmartContracts.getERC20TokenAt(web3, tokenAddress, options)
+		const token = context.getERC20TokenAt(tokenAddress)
 		tokens.push(token)
 		console.log(`
 		##################
