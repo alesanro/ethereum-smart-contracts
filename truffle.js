@@ -24,6 +24,7 @@ module.exports = {
 
 	networks: {
 		"private": {
+			network_uri_test: "http://127.0.0.1:8540",
 			provider: new HDWalletProvider.WalletProvider(getWallet(), getPassword(), "http://127.0.0.1:8540"),
 			network_id: 74565,
 			gasPrice: 0,

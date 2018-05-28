@@ -7,14 +7,14 @@ const MassTransferERC20Artifact = require("./build/contracts/MassTransferERC20")
 
 const getContractAt = (web3, contractAbi, address, { from, gas, gasPrice, }) => {
 	let contract
-	try {
+	try { // try for web3 version 1.*
 		contract = new web3.eth.Contract(contractAbi, address, { 
 			from: from, 
 			gas: gas, 
 			gasPrice: gasPrice, 
 		})
 	}
-	catch (e) {
+	catch (e) { // otherwise try for web3 version 0.2.*
 		const Scheme = web3.eth.contract(contractAbi)
 		contract = Scheme.at(address)	
 	}

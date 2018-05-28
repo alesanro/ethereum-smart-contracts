@@ -5,19 +5,22 @@ module.exports = async function () {
 	let options
 	let tokenAddress
 
+	/// First setup: check token presence and setup web3 and the context
 	if (web3) {
 		const mandatoryContract = artifacts.require("Migrations")
 		options = mandatoryContract.defaults()
 
 		context = new ContractsContext(web3, options)
 		tokenAddress = (await artifacts.require("BasicToken").deployed()).address
-	} else {
-		const uri = "http://localhost:/8540"
-		const tokenHolder = "0x004ec07d2329997267Ec62b4166639513386F32E"
+	} else { /// here could be any custom parameters that are needed
+		const truffleConfig = require("../truffle")
+		const network = truffleConfig.networks["private"]
+		const uri = network.network_uri_test
+		const tokenHolder = network.provider.address
 		options = {
 			from: tokenHolder,
-			gas: 3000000,
-			gasPrice: 20
+			gas: network.gas,
+			gasPrice: network.gasPrice,
 		}
 		context = ContractsContext.withUri(uri, options)
 		return
@@ -28,16 +31,18 @@ module.exports = async function () {
 
 		this.getNextRecepient = () => {
 			return {
-				address: "0x" + (seedNumber++).toString().padStart(40, "0"),
-				// address: web3.utils.randomHex(20),
-				value: web3.toBigNumber(Math.floor(Math.random()*10000) + 1000),
-				// value: web3.toBN(Math.floor(Math.random()*10000) + 1000),
+				address: "0x" + (seedNumber++).toString().padStart(40, "0"), // for web3#v0.2.*
+				// address: web3.utils.randomHex(20), // for web3#v1.*
+				value: web3.toBigNumber(Math.floor(Math.random()*10000) + 1000), // for web3#v0.2.*
+				// value: web3.toBN(Math.floor(Math.random()*10000) + 1000), // for web3#v1.*
 			}
 		}
 	}
 	
+	/// Create address generator to produce a list of addresses and amounts of tokens
+	/// that are supposed to be transferred to them
 	const addressGenerator = new SequentialAddressGenerator(1)
-	const numberOfRecepients = 10
+	const numberOfRecepients = 10 /// NOTE: could be any positive number
 	const recepients = Array.apply(null, {length: numberOfRecepients})
 		.map(() => addressGenerator.getNextRecepient())
 		.reduce((prev, el) => {
@@ -45,19 +50,21 @@ module.exports = async function () {
 			prev.values.push(el.value)
 			return prev
 		}, { addresses: [], values: [], })
-
-	tokenAddress = tokenAddress || "0x" // TODO: mass-transfer compatible token	
-	const token = context.getMassTransferERC20TokenAt(tokenAddress)
 	
-	console.log(`from: ${JSON.stringify(recepients)}`);
-		
+	/// Check if the token address is correct or setup our own token address
+	tokenAddress = tokenAddress || "0x" // TODO: mass-transfer compatible token	
 
+	/// Get contract for a provided address and ready to call functions
+	const token = context.getMassTransferERC20TokenAt(tokenAddress)
+
+	/// Transfer tokens from tokenHolder to recepients.
+	/// Amount of immediate transfers for current options (gasLimit, gasPrice and so on)
+	/// could be fetched by using token.massTransfer.call approach. Returned result will be
+	/// array of two items [ resultCode, amountOfSuccessfulTransfers, ]
 	const tx = await token.massTransfer(recepients.addresses, recepients.values, { 
 		from: options.from, 
 		gas: options.gas,
 		gasPrice: options.gasPrice,
 	})
-	console.log(`${JSON.stringify(tx, null, 4)}`);
-	
 }
 
