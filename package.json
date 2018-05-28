@@ -8,7 +8,8 @@
     "migrate:private:reset": "./node_modules/truffle/build/cli.bundled.js migrate --reset --network private",
     "console": "./node_modules/truffle/build/cli.bundled.js console --network test",
     "console:private": "./node_modules/truffle/build/cli.bundled.js console --network private",
-    "testrpc": "./node_modules/ganache-cli/build/cli.node.js -g 1 -i 777 --gasLimit 4700000 --trace_request true | grep -Ev \"FilterSubprovider|eth_getFilterChanges\""
+    "testrpc": "./node_modules/ganache-cli/build/cli.node.js -g 1 -i 777 --gasLimit 4700000 --trace_request true | grep -Ev \"FilterSubprovider|eth_getFilterChanges\"",
+    "release": "standard-version"
   },
   "repository": {
     "type": "git",
@@ -41,6 +42,7 @@
     "babel-polyfill": "^6.26.0",
     "babel-eslint": "^8.2.1",
     "babel-preset-es2015": "^6.24.1",
-    "babel-register": "^6.24.1"
+    "babel-register": "^6.24.1",
+    "standard-version": "^4.0.0"
   }
 }
