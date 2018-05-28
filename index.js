@@ -1,12 +1,23 @@
 const Web3 = require("web3")
+const contract = require("truffle-contract")
+
 const ERC20Artifact = require("./build/contracts/ERC20")
+const BasicTokenArtifact = require("./build/contracts/BasicToken")
+const MassTransferERC20Artifact = require("./build/contracts/MassTransferERC20")
 
 const getContractAt = (web3, contractAbi, address, { from, gas, gasPrice, }) => {
-	const contract = new web3.eth.Contract(contractAbi, address, { 
-		from: from, 
-		gas: gas, 
-		gasPrice: gasPrice, 
-	})
+	let contract
+	try { // try for web3 version 1.*
+		contract = new web3.eth.Contract(contractAbi, address, { 
+			from: from, 
+			gas: gas, 
+			gasPrice: gasPrice, 
+		})
+	}
+	catch (e) { // otherwise try for web3 version 0.2.*
+		const Scheme = web3.eth.contract(contractAbi)
+		contract = Scheme.at(address)	
+	}
 
 	return contract
 }
@@ -29,6 +40,8 @@ function Context(web3, options = null) {
 
 	this.contracts = {
 		ERC20: ERC20Artifact,
+		BasicToken: BasicTokenArtifact,
+		MassTransferERC20: MassTransferERC20Artifact,
 	}
 
 	this.getContractAt = (contractAbi, address, options = self.options) => {
@@ -36,7 +49,11 @@ function Context(web3, options = null) {
 	}
 
 	this.getERC20TokenAt = (address, options = self.options) => {
-		return self.getContractAt(ERC20Artifact.abi, address, options)
+		return getContractAt(self.web3, ERC20Artifact.abi, address, options)
+	}
+	
+	this.getMassTransferERC20TokenAt = (address, options = self.options) => {		
+		return getContractAt(self.web3, MassTransferERC20Artifact.abi, address, options)
 	}
 }
 

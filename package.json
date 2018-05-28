@@ -4,7 +4,11 @@
   "description": "Provides basic ERC20 tokens and abi for using with web3.js",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "migrate:reset": "./node_modules/truffle/build/cli.bundled.js migrate --reset --network test",
+    "migrate:private:reset": "./node_modules/truffle/build/cli.bundled.js migrate --reset --network private",
+    "console": "./node_modules/truffle/build/cli.bundled.js console --network test",
+    "console:private": "./node_modules/truffle/build/cli.bundled.js console --network private",
+    "testrpc": "./node_modules/ganache-cli/build/cli.node.js -g 1 -i 777 --gasLimit 4700000 --trace_request true | grep -Ev \"FilterSubprovider|eth_getFilterChanges\""
   },
   "repository": {
     "type": "git",
@@ -27,10 +31,16 @@
     "build"
   ],
   "dependencies": {
-    "web3": "1.0.0-beta.34"
+    "web3": "1.0.0-beta.34",
+    "truffle-contract": "^3.0.4"
   },
   "devDependencies": {
     "truffle": "4.1.7",
-    "ganache-cli": "6.1.0"
+    "ganache-cli": "6.1.0",
+    "truffle-hdwallet-provider": "alesanro/truffle-hdwallet-provider#8bb209ff7320b89a735b075a68bc866c935f17f9",
+    "babel-polyfill": "^6.26.0",
+    "babel-eslint": "^8.2.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-register": "^6.24.1"
   }
 }

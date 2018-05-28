@@ -9,6 +9,10 @@ This package provides an ability to access and use basic smart contracts without
 - ERC20
 - _to be continued..._
 
+### List of provided tokens:
+- MassTransfer ERC20 compatible token
+
+
 ## Usage 
 
 First of all, import a module
@@ -48,3 +52,7 @@ const userAddress = "0x00000000000000000000000000000000000000b1"
 const balanceOf = await erc20Token.methods.balanceOf(userAddress).call()
 console.log(`#> user balance (${userAddress}) = ${balanceOf}`)
 ```
+
+## Examples
+
+Some example of how to use smart contracts you can find in [examples](https://github.com/alesanro/ethereum-smart-contracts/tree/master/examples) directory
